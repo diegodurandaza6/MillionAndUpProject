@@ -1,7 +1,6 @@
 ﻿using Properties.Ms.Domain.Property.IPortsIn;
 using Properties.Ms.Domain.Property.IPortsOut;
 using Properties.Ms.Domain.Property.Models;
-using System;
 
 namespace Properties.Ms.Domain.Property
 {

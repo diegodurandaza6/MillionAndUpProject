@@ -2,18 +2,20 @@ using Properties.Ms.Domain;
 using Properties.Ms.AdapterOutRepository;
 using Properties.Ms.AdapterOutRepository.SqlServer;
 using Properties.Ms.AdapterInHttp.Extensions;
-
-string projetcName = "Million And Up Project";
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string projetcName = "Million And Up Project";
 IConfiguration configuration = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json")
                             .AddEnvironmentVariables()
                             .Build();
 
 // Add services to the container.
-
+builder.Services.AddHealthChecks();
+builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 builder.Services.AddControllers();
 builder.Services.AddDomain();
 builder.Services.AddPersistence(configuration);
@@ -26,6 +28,18 @@ builder.Services.ConfigureVersioning();
 var app = builder.Build();
 
 app.AllowSwaggerToListApiVersions(projetcName);
+
+app.MapHealthChecks("/health");
+app.UseHealthChecks("/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}
+);
+app.UseHealthChecksUI(config =>
+{
+    config.UIPath = "/health-ui";
+});
 
 app.UseHttpsRedirection();
 

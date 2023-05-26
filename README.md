@@ -1,16 +1,16 @@
-Pre-requisitos para ejecución:
+Pre-requisitos para ejecuciï¿½n:
 - Proyecto desarrollado en Visual Studio 2022
 - Framework utilizado dotNet 6
 
-Configuración para prueba en local (No se recomienda para uso en producción)
-Cambio del modo de autenticación con SQL Server Management Studio:
-1. En el Explorador de objetos de SQL Server Management Studio (SSMS), haga clic con el botón derecho en el servidor y, después, haga seleccione Propiedades.
-2. En la página Seguridad, bajo Autenticación de servidor, seleccione el nuevo modo de autenticación del servidor y seleccione Aceptar.
-3. En el cuadro de diálogo de SQL Server Management Studio, seleccione Aceptar para aceptar el requisito de reiniciar SQL Server.
-4. En el Explorador de objetos, haga clic con el botón derecho en el servidor y, después, seleccione Reiniciar. Si el Agente SQL Server se está ejecutando, también debe reiniciarse.
+Configuraciï¿½n para prueba en local (No se recomienda para uso en producciï¿½n)
+Cambio del modo de autenticaciï¿½n con SQL Server Management Studio:
+1. En el Explorador de objetos de SQL Server Management Studio (SSMS), haga clic con el botï¿½n derecho en el servidor y, despuï¿½s, haga seleccione Propiedades.
+2. En la pï¿½gina Seguridad, bajo Autenticaciï¿½n de servidor, seleccione el nuevo modo de autenticaciï¿½n del servidor y seleccione Aceptar.
+3. En el cuadro de diï¿½logo de SQL Server Management Studio, seleccione Aceptar para aceptar el requisito de reiniciar SQL Server.
+4. En el Explorador de objetos, haga clic con el botï¿½n derecho en el servidor y, despuï¿½s, seleccione Reiniciar. Si el Agente SQL Server se estï¿½ ejecutando, tambiï¿½n debe reiniciarse.
 
-Pasos de la migración:
-1. Abrir la consola de administración de paquetes de NuGet desde el menú:
+Pasos de la migraciï¿½n:
+1. Abrir la consola de administraciï¿½n de paquetes de NuGet desde el menï¿½:
 	Tools->NuGet Package Manager->Package Manager Console
 2. Ubicamos como Default project el proyecto de nombre:
 	Properties.Ms.AdapterOutRepository
@@ -37,3 +37,5 @@ JSON request examples
   "enabled": true,
   "mimeType": "LogoMAU.png"
 }
+
+* Manage Performance: https://localhost:7131/health-ui#/healthchecks

@@ -9,8 +9,10 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer
     {
         public static void AddPersistence(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
+            string? connectionString = configuration.GetConnectionString("sqlServerDb");
             serviceCollection.AddDbContext<PropertyDBContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("sqlServerDb")));
+                options.UseSqlServer(connectionString))
+                .AddSqlHealthCheck(connectionString);
         }
 
         public static void MigrateDatabase(this IApplicationBuilder app)
@@ -18,6 +20,12 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer
             using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             using var context = serviceScope.ServiceProvider.GetService<PropertyDBContext>();
             context?.Database.Migrate();
+        }
+
+        private static void AddSqlHealthCheck(this IServiceCollection serviceCollection,
+            string? sqlConnectionString)
+        {
+            serviceCollection.AddHealthChecks().AddSqlServer(sqlConnectionString!);
         }
     }
 }
