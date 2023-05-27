@@ -19,6 +19,22 @@ Pasos de la migraci�n:
 3. posteriormente el comando:
 	Update-Database
 
+* Security
+Se agrega capa de seguridad mediante el uso del patron Api Gateway de forma que se pueda tener un unico punto de acceso a los diferentes servicios expuestos ya sea de forma publica como privada, adicional se destacan las siguientes ventajas:
+
+- Autenticación: Primer filtro de seguridad para el control de acceso.
+- Rate Limiting: Controla la cantidad de datos que los clientes pueden utilizar/descargar para así evitar un abuso, o por ejemplo si damos un servicio SaaS nos permite implementar un mayor control con la facturación a dicho cliente. Por ejemplo: las primeras 10 mil llamadas a la api son gratis y luego 2€ por cada mil llamadas adicionales.
+- Monitorizar las API: todo centralizado hace que sea mas sencillo monitorizar y saber que es lo que más se utiliza y como.
+
+Si se cambia un servicio, no se necesita notificar a los clientes, siempre y cuando no se cambie el contrato de la API Gateway, ya que el cliente seguirá llamando a la Gateway mientras que la gateway hará la redirección al nuevo servicio.
+
+Tambien se cuenta con otras ventajas, como caché, load balancers, etc.
+
++ Endpoint ApiGateway para obtención del token
+https://localhost:7142/property-ms/api/v1/Login/Authenticate (<- enruta a ->) https://localhost:50120/api/v1/Login/Authenticate
++ Endpoint ApiGateway para consulta de propiedades con JWT
+https://localhost:7142/property-ms/api/v1/Property/GetPropertyList (<- enruta a ->) https://localhost:50120/api/v1/Property/GetPropertyList
+
 JSON request examples para obtención de token para posterior autorización de ejecución de metodos, los dos roles (admin y adviser) pueden ejecutar todos los metodos del API, sin embargo solo el rol (admin) puede ejecutar el metodo para actualizar precio y actualizar propiedad
 
 - Get token admin user
