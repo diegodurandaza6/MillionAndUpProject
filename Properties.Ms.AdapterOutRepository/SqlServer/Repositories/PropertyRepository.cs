@@ -35,7 +35,7 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
 
         public async Task<int> ChangePriceFromProperty(int idProperty, ChangePricePropertyRequest request)
         {
-            PropertyEntity? property = _DbContext.Property.Find(idProperty);
+            PropertyEntity? property = await _DbContext.Property.FindAsync(idProperty);
 
             if (property != null)
             {
@@ -50,7 +50,7 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
 
         public async Task<PropertyResponse> UpdateProperty(int idProperty, PropertyRequest request)
         {
-            PropertyEntity? property = _DbContext.Property.Find(idProperty);
+            PropertyEntity? property = await _DbContext.Property.FindAsync(idProperty);
             PropertyResponse response = new();            
             if (property != null)
             {

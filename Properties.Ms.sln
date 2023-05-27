@@ -13,6 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Properties.Ms.AdapterOutRep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Properties.Ms.Encrypt", "Properties.Ms.Encrypt\Properties.Ms.Encrypt.csproj", "{985AB2F5-C627-4284-B6BE-7FF6F1C3C014}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C55446B0-30DE-4961-86C8-49D3F137AD2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{2FDD8749-2A4D-4DD0-B04C-874D90049ED4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Properties.Ms.Test", "Properties.Ms.Test\Properties.Ms.Test.csproj", "{6ECF05AB-B216-4C15-BB3A-5BDDB8D92790}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +45,17 @@ Global
 		{985AB2F5-C627-4284-B6BE-7FF6F1C3C014}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{985AB2F5-C627-4284-B6BE-7FF6F1C3C014}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{985AB2F5-C627-4284-B6BE-7FF6F1C3C014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ECF05AB-B216-4C15-BB3A-5BDDB8D92790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ECF05AB-B216-4C15-BB3A-5BDDB8D92790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ECF05AB-B216-4C15-BB3A-5BDDB8D92790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ECF05AB-B216-4C15-BB3A-5BDDB8D92790}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{985AB2F5-C627-4284-B6BE-7FF6F1C3C014} = {2FDD8749-2A4D-4DD0-B04C-874D90049ED4}
+		{6ECF05AB-B216-4C15-BB3A-5BDDB8D92790} = {C55446B0-30DE-4961-86C8-49D3F137AD2A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {20EE4A39-DD24-4AEC-87D6-DC722AF465ED}
