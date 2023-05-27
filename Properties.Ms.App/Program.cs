@@ -14,6 +14,7 @@ IConfiguration configuration = new ConfigurationBuilder()
                             .Build();
 
 // Add services to the container.
+builder.Services.AddJwtCustomized(configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 builder.Services.AddControllers();
@@ -42,11 +43,8 @@ app.UseHealthChecksUI(config =>
 });
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.MigrateDatabase();
-
 app.Run();

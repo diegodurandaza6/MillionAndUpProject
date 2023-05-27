@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Properties.Ms.Domain.Property.IPortsIn;
 using Properties.Ms.Domain.Property.Models;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,7 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
     [ApiController]
     [ApiVersion("1.0", Deprecated = false)]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyService _propertyService;
@@ -41,6 +43,7 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         }
 
         [HttpPatch("ChangePrice/{id}")]
+        [Authorize(Roles="admin")]
         public async Task<IActionResult> ChangePriceFromProperty(int id, [FromBody, Required] ChangePricePropertyRequest request)
         {
             if (!ModelState.IsValid)
@@ -53,6 +56,7 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         }
 
         [HttpPut("Update/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateProperty(int id, [FromBody, Required] PropertyRequest request)
         {
             if (!ModelState.IsValid)

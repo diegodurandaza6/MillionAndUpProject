@@ -13,7 +13,6 @@ namespace Properties.Ms.AdapterInHttp.Extensions
             services.AddSwaggerGen(options =>
             {
                 var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
-
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
                     options.SwaggerDoc(description.GroupName, new OpenApiInfo()
@@ -22,11 +21,35 @@ namespace Properties.Ms.AdapterInHttp.Extensions
                         Version = description.ApiVersion.ToString(),
                         Description = description.IsDeprecated ? $"{appName} {description.ApiVersion} is marked as deprecated. Please consider using a newer version." : string.Empty
                     });
+                    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer",
+                        BearerFormat = "JWT",
+                        In = ParameterLocation.Header,
+                        Description = "Here enter JWT Token with bearer format like Bearer[space]token"
+                    });
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[]
+                            {
+                            }
+                        }
+                    });
                 }
 
                 options.DescribeAllParametersInCamelCase();
             });
-
             return services;
         }
 
@@ -34,7 +57,6 @@ namespace Properties.Ms.AdapterInHttp.Extensions
         public static IApplicationBuilder AllowSwaggerToListApiVersions(this WebApplication app, string appName)
         {
             var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
@@ -44,7 +66,6 @@ namespace Properties.Ms.AdapterInHttp.Extensions
                 }
                 options.DocExpansion(DocExpansion.List);
             });
-
             return app;
         }
     }

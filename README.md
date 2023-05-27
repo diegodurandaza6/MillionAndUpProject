@@ -19,7 +19,21 @@ Pasos de la migraci�n:
 3. posteriormente el comando:
 	Update-Database
 
-JSON request examples
+JSON request examples para obtención de token para posterior autorización de ejecución de metodos, los dos roles (admin y adviser) pueden ejecutar todos los metodos del API, sin embargo solo el rol (admin) puede ejecutar el metodo para actualizar precio y actualizar propiedad
+
+- Get token admin user
+{
+  "userName": "dduran",
+  "password": "Admin123*"
+}
+
+- Get token adviser user
+{
+  "userName": "dduran",
+  "password": "Adviser123*"
+}
+
+JSON request examples para creación de propiedades y agregar imagen de la propiedad
 
 - Create (Post)
 {
