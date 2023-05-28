@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +8,7 @@ namespace Properties.Ms.AdapterInHttp.Extensions
 {
     public static class JwtExtension
     {
-        public static IServiceCollection AddJwtCustomized(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtCustomized(this IServiceCollection services, IConfiguration configuration)
         {
             SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:key").Value));
 
@@ -22,10 +20,11 @@ namespace Properties.Ms.AdapterInHttp.Extensions
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = key
+                    IssuerSigningKey = key,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(45)
                 };
             });
-            return services;
         }
     }
 }

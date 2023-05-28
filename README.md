@@ -1,16 +1,16 @@
-Pre-requisitos para ejecuci�n:
+Pre-requisitos para ejecución:
 - Proyecto desarrollado en Visual Studio 2022
 - Framework utilizado dotNet 6
 
-Configuraci�n para prueba en local (No se recomienda para uso en producci�n)
-Cambio del modo de autenticaci�n con SQL Server Management Studio:
-1. En el Explorador de objetos de SQL Server Management Studio (SSMS), haga clic con el bot�n derecho en el servidor y, despu�s, haga seleccione Propiedades.
-2. En la p�gina Seguridad, bajo Autenticaci�n de servidor, seleccione el nuevo modo de autenticaci�n del servidor y seleccione Aceptar.
-3. En el cuadro de di�logo de SQL Server Management Studio, seleccione Aceptar para aceptar el requisito de reiniciar SQL Server.
-4. En el Explorador de objetos, haga clic con el bot�n derecho en el servidor y, despu�s, seleccione Reiniciar. Si el Agente SQL Server se est� ejecutando, tambi�n debe reiniciarse.
+Configuración para prueba en local (No se recomienda para uso en producción)
+Cambio del modo de autenticación con SQL Server Management Studio:
+1. En el Explorador de objetos de SQL Server Management Studio (SSMS), haga clic con el botón derecho en el servidor y, después, haga seleccione Propiedades.
+2. En la página Seguridad, bajo Autenticación de servidor, seleccione el nuevo modo de autenticación del servidor y seleccione Aceptar.
+3. En el cuadro de diálogo de SQL Server Management Studio, seleccione Aceptar para aceptar el requisito de reiniciar SQL Server.
+4. En el Explorador de objetos, haga clic con el botón derecho en el servidor y, después, seleccione Reiniciar. Si el Agente SQL Server se está ejecutando, también debe reiniciarse.
 
-Pasos de la migraci�n:
-1. Abrir la consola de administraci�n de paquetes de NuGet desde el men�:
+Pasos de la migración:
+1. Abrir la consola de administración de paquetes de NuGet desde el menú:
 	Tools->NuGet Package Manager->Package Manager Console
 2. Ubicamos como Default project el proyecto de nombre:
 	Properties.Ms.AdapterOutRepository

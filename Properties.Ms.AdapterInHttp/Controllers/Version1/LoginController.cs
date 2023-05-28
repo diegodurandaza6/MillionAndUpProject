@@ -60,11 +60,11 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Surname, user.Surname),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Rol)
+                new Claim(ClaimTypes.Role, user.Rol),
             };
             var secutiryToken = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(15),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(secutiryToken);
