@@ -40,7 +40,7 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         {
             CipherHelper _helper = new(_configuration);//TODO: Validar dependencia.
             UserModel? currentUser = UsersMock.UsersDb.FirstOrDefault(
-                u => u.UserName.ToLower() == login.UserName.ToLower() && _helper.Decrypt(u.Password) == login.Password
+                u => u.UserName.ToLower() == login.UserName.ToLower() && u.Password == _helper.Encrypt(login.Password)
             );
             if (currentUser != null)
             {

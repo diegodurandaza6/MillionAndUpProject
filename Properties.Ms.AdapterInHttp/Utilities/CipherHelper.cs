@@ -14,7 +14,7 @@ namespace Properties.Ms.AdapterInHttp.Utilities
             _configuration = configuration;
         }
 
-        public string Decrypt(string cipherText)
+        public string Encrypt(string plainText)
         {
             byte[] Key = Encoding.UTF8.GetBytes(_configuration["Encrypt:Key"]);
             byte[] IV = Encoding.UTF8.GetBytes(_configuration["Encrypt:IV"]);
@@ -22,17 +22,19 @@ namespace Properties.Ms.AdapterInHttp.Utilities
             aes.Key = Key;
             aes.IV = IV;
 
-            byte[] encryptedBytes = Convert.FromBase64String(cipherText);
-            byte[] decryptedBytes;
+            byte[] encryptedBytes;
 
-            using (MemoryStream ms = new(encryptedBytes))
+            using (MemoryStream ms = new())
             {
-                using CryptoStream cs = new(ms, aes.CreateDecryptor(), CryptoStreamMode.Read);
-                using StreamReader reader = new(cs);
-                decryptedBytes = Encoding.UTF8.GetBytes(reader.ReadToEnd());
+                using (CryptoStream cs = new(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                {
+                    byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
+                    cs.Write(plainBytes, 0, plainBytes.Length);
+                }
+                encryptedBytes = ms.ToArray();
             }
 
-            return Encoding.UTF8.GetString(decryptedBytes);
+            return Convert.ToBase64String(encryptedBytes);
         }
     }
 }
