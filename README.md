@@ -3,7 +3,7 @@ Pre-requisitos para ejecución:
 - Framework utilizado dotNet 6
 
 Configuración para prueba en local (No se recomienda para uso en producción)
-Cambio del modo de autenticación con SQL Server Management Studio:
+Cambio del modo de autenticación con SQL Server Management Studio (Se configura la contraseña 'qwerty' para el usuario 'sa'):
 1. En el Explorador de objetos de SQL Server Management Studio (SSMS), haga clic con el botón derecho en el servidor y, después, haga seleccione Propiedades.
 2. En la página Seguridad, bajo Autenticación de servidor, seleccione el nuevo modo de autenticación del servidor y seleccione Aceptar.
 3. En el cuadro de diálogo de SQL Server Management Studio, seleccione Aceptar para aceptar el requisito de reiniciar SQL Server.
