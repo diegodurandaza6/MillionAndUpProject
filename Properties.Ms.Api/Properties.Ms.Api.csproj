@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Properties.Ms.AdapterInHttp\Properties.Ms.AdapterInHttp.csproj" />
     <ProjectReference Include="..\Properties.Ms.AdapterOutRepository\Properties.Ms.AdapterOutRepository.csproj" />
+    <ProjectReference Include="..\Properties.Ms.Application\Properties.Ms.Application.csproj" />
     <ProjectReference Include="..\Properties.Ms.Domain\Properties.Ms.Domain.csproj" />
   </ItemGroup>
 

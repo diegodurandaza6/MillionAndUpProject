@@ -1,4 +1,4 @@
-using Properties.Ms.Domain;
+using Properties.Ms.Application;
 using Properties.Ms.AdapterOutRepository;
 using Properties.Ms.AdapterOutRepository.SqlServer;
 using Properties.Ms.AdapterInHttp.Extensions;
@@ -18,7 +18,7 @@ builder.Services.AddJwtCustomized(configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 builder.Services.AddControllers();
-builder.Services.AddDomain();
+builder.Services.AddApplication();
 builder.Services.AddPersistence(configuration);
 builder.Services.AddRepository();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

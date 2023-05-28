@@ -1,19 +1,20 @@
-﻿using Properties.Ms.Domain.Property.IPortsIn;
+﻿using Properties.Ms.Domain.Property.Models;
+using Properties.Ms.Domain.Property.IPortsIn;
 using Properties.Ms.Domain.Property.IPortsOut;
-using Properties.Ms.Domain.Property.Models;
 
-namespace Properties.Ms.Domain.Property
+namespace Properties.Ms.Application
 {
     public class PropertyService : IPropertyService
     {
         private readonly IPropertyRepository _propertyRepository;
-        public PropertyService(IPropertyRepository propertyRepository) {
+        public PropertyService(IPropertyRepository propertyRepository)
+        {
             _propertyRepository = propertyRepository;
         }
 
-        public Models.Property CreatePropertyBuilding(PropertyRequest request)
+        public Property CreatePropertyBuilding(PropertyRequest request)
         {
-            Models.Property property = new()
+            Property property = new()
             {
                 Name = request.Name,
                 Address = request.Address,
@@ -24,6 +25,7 @@ namespace Properties.Ms.Domain.Property
             };
             return _propertyRepository.CreatePropertyBuilding(property);
         }
+
         public async Task<PropertyImage> AddImageFromProperty(PropertyImageRequest request)
         {
             PropertyImage propertyImage = new()
@@ -34,6 +36,7 @@ namespace Properties.Ms.Domain.Property
             };
             return _propertyRepository.AddImageFromProperty(propertyImage);
         }
+
         private static async Task<string> GetImagePath(string imageBase64, string mimeType)
         {
             byte[] image = Convert.FromBase64String(imageBase64);
@@ -55,6 +58,7 @@ namespace Properties.Ms.Domain.Property
             }
             return WriteImageDirectoryPath;
         }
+
         public async Task<int> ChangePriceFromProperty(int idProperty, ChangePricePropertyRequest request)
         {
             return await _propertyRepository.ChangePriceFromProperty(idProperty, request);
@@ -65,7 +69,7 @@ namespace Properties.Ms.Domain.Property
             return _propertyRepository.UpdateProperty(idProperty, request);
         }
 
-        public async Task<IEnumerable<Models.Property>> ListPropertyWithFilters(string? address, decimal? price, int? year)
+        public async Task<IEnumerable<Property>> ListPropertyWithFilters(string? address, decimal? price, int? year)
         {
             return await _propertyRepository.ListPropertyWithFilters(address, price, year);
         }
