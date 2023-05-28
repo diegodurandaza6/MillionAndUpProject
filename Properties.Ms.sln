@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Properties.Ms.App", "Properties.Ms.App\Properties.Ms.App.csproj", "{EE8307D4-58B9-4F9E-B4FD-6CE020FAAAF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Properties.Ms.Api", "Properties.Ms.App\Properties.Ms.Api.csproj", "{EE8307D4-58B9-4F9E-B4FD-6CE020FAAAF1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Properties.Ms.Domain", "Properties.Ms.Domain\Properties.Ms.Domain.csproj", "{221A0D70-9520-4550-87C3-9D7D18BC9465}"
 EndProject
