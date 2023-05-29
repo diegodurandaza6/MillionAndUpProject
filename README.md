@@ -69,3 +69,6 @@ JSON request examples para creación de propiedades y agregar imagen de la propi
 }
 
 * Manage Performance: https://localhost:7131/health-ui#/healthchecks
+
+* Maintenance
+Se agrega contron de excepciones generico, sin embargo se pueden agregar exepciones mas especificas, se agrega manejo de los por consola, sin embargo se podría agregar un servicio de tercero para ver el registro de logs de forma que genere mayor valor

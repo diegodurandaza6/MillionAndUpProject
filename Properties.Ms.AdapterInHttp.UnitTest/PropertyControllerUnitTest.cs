@@ -3,6 +3,7 @@ using Moq;
 using Properties.Ms.Domain.Property.IPortsIn;
 using Microsoft.AspNetCore.Mvc;
 using Properties.Ms.Domain.Property.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Properties.Ms.AdapterInHttp.UnitTest
 {
@@ -10,13 +11,15 @@ namespace Properties.Ms.AdapterInHttp.UnitTest
     {
         private PropertyController _controller;
         private Mock<IPropertyService> _requestMock;
+        private Mock<ILogger<PropertyController>> _logger;
         private PropertyRequest mockRequest;
         
         [SetUp]
         public void Setup()
         {
             _requestMock = new Mock<IPropertyService>();
-            _controller = new PropertyController(_requestMock.Object);
+            _logger = new Mock<ILogger<PropertyController>>();
+            _controller = new PropertyController(_requestMock.Object, _logger.Object);
             mockRequest = new() { Name = "Property name 5", Address = "Property address 5", Price = 5000000, Year = 2020, IdOwner = 5 };
         }
 
