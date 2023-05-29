@@ -1,8 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-
-namespace Properties.Ms.Domain.Property.Models
+﻿namespace Properties.Ms.Domain.Property.Models
 {
     public class Property
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Properties.Ms.Domain.Property.Models
+﻿namespace Properties.Ms.Domain.Property.Models
 {
     public class UserModel
     {

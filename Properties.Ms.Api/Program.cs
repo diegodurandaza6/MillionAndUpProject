@@ -7,7 +7,7 @@ using HealthChecks.UI.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string projetcName = "Million And Up Project";
+string projetcName = "MS real estate project";
 IConfiguration configuration = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json")
                             .AddEnvironmentVariables()
