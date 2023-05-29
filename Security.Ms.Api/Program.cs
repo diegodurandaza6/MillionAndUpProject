@@ -8,11 +8,6 @@ using System.ComponentModel.DataAnnotations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//IConfiguration configuration = new ConfigurationBuilder()
-//                            .AddJsonFile("appsettings.json")
-//                            .AddEnvironmentVariables()
-//                            .Build();
-
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -35,18 +30,25 @@ app.MapPost("/api/token",
     async ([FromBody, Required] UserLogin login, 
     ILoginService loginService) =>
 {
-    if (login.UserName == null || login.Password == null)
+    try
     {
-        return Results.BadRequest("Se requiere un objeto válido en el cuerpo de la solicitud.");
-    }
-    UserModel? user = await loginService.Authenticate(login);
-    if (user != null)
-    {
-        string jwtToken = loginService.GenerateToken(user);
-        return Results.Ok(new { token = jwtToken });
-    }
+        if (login.UserName == null || login.Password == null)
+        {
+            return Results.BadRequest("Se requiere un objeto válido en el cuerpo de la solicitud.");
+        }
+        UserModel? user = await loginService.Authenticate(login);
+        if (user != null)
+        {
+            string jwtToken = loginService.GenerateToken(user);
+            return Results.Ok(new { token = jwtToken });
+        }
 
-    return Results.Unauthorized();
+        return Results.Unauthorized();
+    }
+    catch (Exception)
+    {
+        return Results.StatusCode(StatusCodes.Status500InternalServerError);
+    }
 });
 
 app.Run();

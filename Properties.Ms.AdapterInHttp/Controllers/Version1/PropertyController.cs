@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Properties.Ms.Domain.Property.IPortsIn;
 using Properties.Ms.Domain.Property.Models;
 using System.ComponentModel.DataAnnotations;
@@ -13,10 +15,13 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
     public class PropertyController : ControllerBase
     {
         private readonly IPropertyService _propertyService;
+        private readonly ILogger<PropertyController> _logger;
 
-        public PropertyController(IPropertyService propertyService)
+        public PropertyController(IPropertyService propertyService,
+            ILogger<PropertyController> logger)
         {
             _propertyService = propertyService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -27,13 +32,20 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         [HttpPost("Create")]
         public IActionResult CreatePropertyBuilding([FromBody, Required] PropertyRequest propertyRequest)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                Property newProperty = _propertyService.CreatePropertyBuilding(propertyRequest);
+                return Created("", newProperty);
             }
-            Property newProperty = _propertyService.CreatePropertyBuilding(propertyRequest);
-            return Created("", newProperty);
-            //return Ok(newProperty);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en CreatePropertyBuilding: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error en el servidor");
+            }
         }
 
         /// <summary>
@@ -44,12 +56,20 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         [HttpPost("AddImage")]
         public async Task<IActionResult> AddImageFromProperty([FromBody, Required] PropertyImageRequest propertyImageRequest)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                PropertyImage newImageProperty = await _propertyService.AddImageFromProperty(propertyImageRequest);
+                return Ok(newImageProperty);
             }
-            PropertyImage newImageProperty = await _propertyService.AddImageFromProperty(propertyImageRequest);
-            return Ok(newImageProperty);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en AddImageFromProperty: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error en el servidor");
+            }
         }
 
         /// <summary>
@@ -62,13 +82,20 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         [Authorize(Roles="admin")]
         public async Task<IActionResult> ChangePriceFromProperty(int id, [FromBody, Required] ChangePricePropertyRequest request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                await _propertyService.ChangePriceFromProperty(id, request);
+                return Ok();
             }
-            await _propertyService.ChangePriceFromProperty(id, request);
-            //return Created("/buldingasd/1", newProperty);
-            return Ok();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en ChangePriceFromProperty: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error en el servidor");
+            }
         }
 
         /// <summary>
@@ -81,12 +108,21 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateProperty(int id, [FromBody, Required] PropertyRequest request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                PropertyResponse response = await _propertyService.UpdateProperty(id, request);
+                return Ok(response);
+
             }
-            PropertyResponse response = await _propertyService.UpdateProperty(id, request);
-            return Ok(response);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error en UpdateProperty: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error en el servidor");
+            }
         }
 
         /// <summary>
@@ -99,18 +135,26 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
         [HttpGet("GetPropertyList")]
         public async Task<IActionResult> GetPropertyList(string? address, decimal? price, int? year)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                IEnumerable<Property> response = await _propertyService.ListPropertyWithFilters(address, price, year);
+                if (response.Any())
+                {
+                    return Ok(response);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
-            IEnumerable<Property> response = await _propertyService.ListPropertyWithFilters(address, price, year);
-            if (response.Any())
+            catch (Exception ex)
             {
-                return Ok(response);
-            }
-            else
-            {
-                return NotFound();
+                _logger.LogError(ex, $"Error en GetPropertyList: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error en el servidor");
             }
         }
     }

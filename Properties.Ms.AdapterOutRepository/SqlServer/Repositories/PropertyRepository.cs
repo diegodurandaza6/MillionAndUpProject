@@ -111,22 +111,29 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
         /// <returns>Enumeración de propiedades.</returns>
         public async Task<IEnumerable<Property>> ListPropertyWithFilters(string? address, decimal? price, int? year)
         {
-            IQueryable<PropertyEntity> query = _DbContext.Property.AsQueryable<PropertyEntity>();
-            if (!string.IsNullOrEmpty(address))
+            try
             {
-                query = query.Where(x => x.Address == address);
-            }
-            if (price.HasValue)
-            {
-                query = query.Where(x => x.Price <= price.Value);
-            }
-            if (year.HasValue)
-            {
-                query = query.Where(x => x.Year == year.Value);
-            }
-            List<PropertyEntity> result = await query.ToListAsync();
+                IQueryable<PropertyEntity> query = _DbContext.Property.AsQueryable<PropertyEntity>();
+                if (!string.IsNullOrEmpty(address))
+                {
+                    query = query.Where(x => x.Address == address);
+                }
+                if (price.HasValue)
+                {
+                    query = query.Where(x => x.Price <= price.Value);
+                }
+                if (year.HasValue)
+                {
+                    query = query.Where(x => x.Year == year.Value);
+                }
+                List<PropertyEntity> result = await query.ToListAsync();
 
-            return result.ToDomainIterable();
+                return result.ToDomainIterable();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

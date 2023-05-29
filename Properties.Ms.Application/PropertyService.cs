@@ -19,16 +19,23 @@ namespace Properties.Ms.Application
         /// <returns>Retorna la entidad creada</returns>
         public Property CreatePropertyBuilding(PropertyRequest request)
         {
-            Property property = new()
+            try
             {
-                Name = request.Name,
-                Address = request.Address,
-                CodeInternal = Guid.NewGuid().ToString(),
-                Price = request.Price,
-                Year = request.Year,
-                IdOwner = request.IdOwner,
-            };
-            return _propertyRepository.CreatePropertyBuilding(property);
+                Property property = new()
+                {
+                    Name = request.Name,
+                    Address = request.Address,
+                    CodeInternal = Guid.NewGuid().ToString(),
+                    Price = request.Price,
+                    Year = request.Year,
+                    IdOwner = request.IdOwner,
+                };
+                return _propertyRepository.CreatePropertyBuilding(property);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -38,13 +45,20 @@ namespace Properties.Ms.Application
         /// <returns>La ruta de la imagen</returns>
         public async Task<PropertyImage> AddImageFromProperty(PropertyImageRequest request)
         {
-            PropertyImage propertyImage = new()
+            try
             {
-                IdProperty = request.IdProperty,
-                File = await GetImagePath(request.FileBase64, request.mimeType),
-                Enabled = true,
-            };
-            return _propertyRepository.AddImageFromProperty(propertyImage);
+                PropertyImage propertyImage = new()
+                {
+                    IdProperty = request.IdProperty,
+                    File = await GetImagePath(request.FileBase64, request.mimeType),
+                    Enabled = true,
+                };
+                return _propertyRepository.AddImageFromProperty(propertyImage);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -55,24 +69,31 @@ namespace Properties.Ms.Application
         /// <returns>El path del archivo almacenado</returns>
         private static async Task<string> GetImagePath(string imageBase64, string mimeType)
         {
-            byte[] image = Convert.FromBase64String(imageBase64);
-            string directory = string.Format("{0}\\{1}", Directory.GetCurrentDirectory(), "FileServer\\PropertiesImages");
-            if (!Directory.Exists(directory))
+            try
             {
-                Directory.CreateDirectory(directory);
-            }
+                byte[] image = Convert.FromBase64String(imageBase64);
+                string directory = string.Format("{0}\\{1}", Directory.GetCurrentDirectory(), "FileServer\\PropertiesImages");
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
 
-            var newFileName = Guid.NewGuid();
-            string extension = Path.GetExtension(mimeType);
-            string WriteImageDirectoryPath = string.Format("{0}\\{1}{2}", directory, newFileName, extension);
-            if (!File.Exists(WriteImageDirectoryPath))
-            {
-                using FileStream imageFile = new(WriteImageDirectoryPath, FileMode.Create);
-                await imageFile.WriteAsync(image);
-                imageFile.Flush();
-                imageFile.Dispose();
+                var newFileName = Guid.NewGuid();
+                string extension = Path.GetExtension(mimeType);
+                string WriteImageDirectoryPath = string.Format("{0}\\{1}{2}", directory, newFileName, extension);
+                if (!File.Exists(WriteImageDirectoryPath))
+                {
+                    using FileStream imageFile = new(WriteImageDirectoryPath, FileMode.Create);
+                    await imageFile.WriteAsync(image);
+                    imageFile.Flush();
+                    imageFile.Dispose();
+                }
+                return WriteImageDirectoryPath;
             }
-            return WriteImageDirectoryPath;
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -83,7 +104,14 @@ namespace Properties.Ms.Application
         /// <returns>Retorna la cantidad de registros modificados</returns>
         public async Task<int> ChangePriceFromProperty(int idProperty, ChangePricePropertyRequest request)
         {
-            return await _propertyRepository.ChangePriceFromProperty(idProperty, request);
+            try
+            {
+                return await _propertyRepository.ChangePriceFromProperty(idProperty, request);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -94,7 +122,14 @@ namespace Properties.Ms.Application
         /// <returns>La propiedad actualizada</returns>
         public Task<PropertyResponse> UpdateProperty(int idProperty, PropertyRequest request)
         {
-            return _propertyRepository.UpdateProperty(idProperty, request);
+            try
+            {
+                return _propertyRepository.UpdateProperty(idProperty, request);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         /// <summary>
@@ -106,7 +141,14 @@ namespace Properties.Ms.Application
         /// <returns>Enumeración de propiedades.</returns>
         public async Task<IEnumerable<Property>> ListPropertyWithFilters(string? address, decimal? price, int? year)
         {
-            return await _propertyRepository.ListPropertyWithFilters(address, price, year);
+            try
+            {
+                return await _propertyRepository.ListPropertyWithFilters(address, price, year);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
