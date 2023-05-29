@@ -18,6 +18,11 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
             _DbContext = DbContext;
         }
 
+        /// <summary>
+        /// Crea una propiedad en el contexto
+        /// </summary>
+        /// <param name="property"></param>
+        /// <returns>Retorna la entidad creada</returns>
         public Property CreatePropertyBuilding(Property property)
         {
             using var context = _DbContext;
@@ -26,6 +31,11 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
             return newPropertyEntity.ToDomain();
         }
 
+        /// <summary>
+        /// Almacena la ruta creada en donde se almacena el archivo
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns>La ruta de la imagen</returns>
         public PropertyImage AddImageFromProperty(PropertyImage image)
         {
             PropertyImageEntity newImagePropertyEntity = _DbContext.PropertyImage.Add(image.ToEntity()).Entity;
@@ -33,6 +43,12 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
             return newImagePropertyEntity.ToDomain();
         }
 
+        /// <summary>
+        /// Permite cambiar el precio de una propiedad determinada
+        /// </summary>
+        /// <param name="idProperty"></param>
+        /// <param name="request"></param>
+        /// <returns>Retorna la cantidad de registros modificados</returns>
         public async Task<int> ChangePriceFromProperty(int idProperty, ChangePricePropertyRequest request)
         {
             PropertyEntity? property = await _DbContext.Property.FindAsync(idProperty);
@@ -48,6 +64,12 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
             }
         }
 
+        /// <summary>
+        /// Actualiza la información de una propiedad determinada
+        /// </summary>
+        /// <param name="idProperty"></param>
+        /// <param name="request"></param>
+        /// <returns>La propiedad actualizada</returns>
         public async Task<PropertyResponse> UpdateProperty(int idProperty, PropertyRequest request)
         {
             PropertyEntity? property = await _DbContext.Property.FindAsync(idProperty);
@@ -80,6 +102,13 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Repositories
             return response;
         }
 
+        /// <summary>
+        /// Consulta la lista de propiedades por diferentes filtros
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="price"></param>
+        /// <param name="year"></param>
+        /// <returns>Enumeración de propiedades.</returns>
         public async Task<IEnumerable<Property>> ListPropertyWithFilters(string? address, decimal? price, int? year)
         {
             IQueryable<PropertyEntity> query = _DbContext.Property.AsQueryable<PropertyEntity>();

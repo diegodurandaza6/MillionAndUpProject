@@ -31,11 +31,11 @@ Si se cambia un servicio, no se necesita notificar a los clientes, siempre y cua
 Tambien se cuenta con otras ventajas, como caché, load balancers, etc.
 
 + Endpoint ApiGateway para obtención del token
-https://localhost:7142/property-ms/api/v1/Login/Authenticate (<- enruta a ->) https://localhost:50120/api/v1/Login/Authenticate
+https://localhost:7142/security-ms/api/token (<- enruta a ->) https://localhost:50020/api/token
 + Endpoint ApiGateway para consulta de propiedades con JWT
 https://localhost:7142/property-ms/api/v1/Property/GetPropertyList (<- enruta a ->) https://localhost:50120/api/v1/Property/GetPropertyList
 
-JSON request examples para obtención de token para posterior autorización de ejecución de metodos, los dos roles (admin y adviser) pueden ejecutar todos los metodos del API, sin embargo solo el rol (admin) puede ejecutar el metodo para actualizar precio y actualizar propiedad
+JSON request examples para obtención de token desde el API de seguridad para posterior autorización de ejecución de metodos, los dos roles (admin y adviser) pueden ejecutar todos los metodos del API, sin embargo solo el rol (admin) puede ejecutar el metodo para actualizar precio y actualizar propiedad
 
 - Get token admin user
 {

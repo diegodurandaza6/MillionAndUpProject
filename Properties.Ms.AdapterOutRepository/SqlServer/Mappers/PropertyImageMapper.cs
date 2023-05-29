@@ -10,6 +10,11 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Mappers
 {
     public static class PropertyImageMapper
     {
+        /// <summary>
+        /// Mapea un objeto PropertyImageEntity a PropertyImage
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Objeto PropertyImage</returns>
         public static PropertyImage ToDomain(this PropertyImageEntity entity)
         {
             return new PropertyImage
@@ -21,6 +26,11 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Mappers
             };
         }
 
+        /// <summary>
+        /// Mapea un objeto PropertyImage a PropertyImageEntity
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Objeto PropertyImageEntity</returns>
         public static PropertyImageEntity ToEntity(this PropertyImage property)
         {
             return new PropertyImageEntity

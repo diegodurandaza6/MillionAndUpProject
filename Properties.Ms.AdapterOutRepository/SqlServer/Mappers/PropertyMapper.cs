@@ -5,6 +5,12 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Mappers
 {
     public static class PropertyMapper
     {
+
+        /// <summary>
+        /// Mapea un objeto PropertyEntity a Property
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Objeto Property</returns>
         public static Property ToDomain(this PropertyEntity entity)
         {
             return new Property
@@ -18,6 +24,12 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Mappers
                 IdOwner = entity.IdOwner
             };
         }
+
+        /// <summary>
+        /// Mapea un objeto Property a PropertyEntity
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Objeto PropertyEntity</returns>
 
         public static PropertyEntity ToEntity(this Property property)
         {
@@ -33,6 +45,11 @@ namespace Properties.Ms.AdapterOutRepository.SqlServer.Mappers
             };
         }
 
+        /// <summary>
+        /// Consulta la entidad PropertyEntity
+        /// </summary>
+        /// <param name="enumerableEntity"></param>
+        /// <returns>Enumeración iterable de la entidad Property</returns>
         public static IEnumerable<Property> ToDomainIterable(this IEnumerable<PropertyEntity> enumerableEntity)
         {
             return enumerableEntity.Select(x => x.ToDomain());

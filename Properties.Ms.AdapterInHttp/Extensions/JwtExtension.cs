@@ -22,7 +22,7 @@ namespace Properties.Ms.AdapterInHttp.Extensions
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromSeconds(45)
+                    ClockSkew = TimeSpan.FromSeconds(double.Parse(configuration.GetSection("Jwt:ClockSkewSeconds").Value))
                 };
             });
         }
