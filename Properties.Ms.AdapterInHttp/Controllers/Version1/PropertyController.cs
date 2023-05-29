@@ -19,6 +19,11 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
             _propertyService = propertyService;
         }
 
+        /// <summary>
+        /// Permite crear una propiedad
+        /// </summary>
+        /// <param name="propertyRequest"></param>
+        /// <returns>Retorna un obketo con el id y codigo interno autogenerado</returns>
         [HttpPost("Create")]
         public IActionResult CreatePropertyBuilding([FromBody, Required] PropertyRequest propertyRequest)
         {
@@ -31,6 +36,11 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
             //return Ok(newProperty);
         }
 
+        /// <summary>
+        /// Permite subir imagenes de una propiedad a un servidor de archivos
+        /// </summary>
+        /// <param name="propertyImageRequest"></param>
+        /// <returns>Retorna un objeto con la ruta del servidor en donde se guardó el archivo</returns>
         [HttpPost("AddImage")]
         public async Task<IActionResult> AddImageFromProperty([FromBody, Required] PropertyImageRequest propertyImageRequest)
         {
@@ -42,6 +52,12 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
             return Ok(newImageProperty);
         }
 
+        /// <summary>
+        /// Permite actualizar el precio solo por parte de un usuario con rol admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="request"></param>
+        /// <returns>No retorna algo en particular</returns>
         [HttpPatch("ChangePrice/{id}")]
         [Authorize(Roles="admin")]
         public async Task<IActionResult> ChangePriceFromProperty(int id, [FromBody, Required] ChangePricePropertyRequest request)
@@ -55,6 +71,12 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
             return Ok();
         }
 
+        /// <summary>
+        /// Permite actualizar todo el recurso de una propiedad solo por el rol admin
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="request"></param>
+        /// <returns>Retorna el objeto de propiedad actualizado</returns>
         [HttpPut("Update/{id}")]
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateProperty(int id, [FromBody, Required] PropertyRequest request)
@@ -67,6 +89,13 @@ namespace Properties.Ms.AdapterInHttp.Controllers.Version1
             return Ok(response);
         }
 
+        /// <summary>
+        /// Permite consultar las propiedades segun los filtros establecidos.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="price"></param>
+        /// <param name="year"></param>
+        /// <returns>Retorna una lista de propiedades.</returns>
         [HttpGet("GetPropertyList")]
         public async Task<IActionResult> GetPropertyList(string? address, decimal? price, int? year)
         {
